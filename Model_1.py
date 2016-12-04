@@ -62,7 +62,7 @@ OneHot = pd.get_dummies(categorical_to_keep)
 from sklearn.feature_extraction import FeatureHasher
 FH = FeatureHasher(n_features = 1000, input_type = 'dict')
 hashed_Feat = FH.transform(categorical_to_keep.to_dict(orient='records'))
-dense_Feat = hashed_Feat.todense()
+#dense_Feat = hashed_Feat.todense()
 
 ### make into categories
 
@@ -98,10 +98,18 @@ assert X_train.shape[0] + X_test.shape[0] == continuous.shape[0]
  
 # model 2
 # 9069687 rmse for 100 regressors
-from sklearn.ensemble import RandomForestRegressor
-clf = RandomForestRegressor(n_estimators = 400, criterion='mse', verbose = 1, n_jobs = 7)
-clf.fit(X_train, y_train)
-result = clf.predict(X_test)
+# with one hots vars 4332759 rmse
+#from sklearn.ensemble import RandomForestRegressor
+#clf = RandomForestRegressor(n_estimators = 400, criterion='mse', verbose = 1, n_jobs = 7)
+#clf.fit(X_train, y_train)
+#result = clf.predict(X_test)
+
+# model 3 # default xgb was 4389784
+import xgboost as xgb
+from xgboost.sklearn import XGBRegressor
+xgb_mod = XGBRegressor(max_depth = 10, learning_rate = 0.25, n_estimators = 150)
+xgb_mod.fit(X_train, y_train)
+result = xgb_mod.predict(X_test)
 
 # score
 from sklearn.metrics import mean_squared_error
