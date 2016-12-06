@@ -126,7 +126,7 @@ if __name__ == "__main__":
     print('\nMedian Loss:', train.loss.median())
     print('Mean Loss:', train.loss.mean())
 
-    ids = pd.read_csv('input/test.csv')['id']
+    ids = pd.read_csv(directory + 'test.csv')['id']
     train_y = np.log(train['loss'] + shift)
     train_x = train.drop(['loss','id'], axis=1)
     test_x = test.drop(['loss','id'], axis=1)
@@ -202,7 +202,7 @@ if __name__ == "__main__":
 
     now = datetime.now()
     score = str(round((cv_sum / n_folds), 6))
-    sub_file = 'output/submission_5fold-average-xgb_fairobj_' + str(score) + '_' + str(
+    sub_file = directory + 'submission_5fold-average-xgb_fairobj_' + str(score) + '_' + str(
         now.strftime("%Y-%m-%d-%H-%M")) + '.csv'
     print("Writing submission: %s" % sub_file)
     result.to_csv(sub_file, index=True, index_label='id')
