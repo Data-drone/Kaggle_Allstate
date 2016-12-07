@@ -18,8 +18,8 @@ from sklearn.metrics import mean_absolute_error
 import numpy as np
 import pickle
 
-feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
-ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
+feats_dir = '../Dropbox/Kaggle_AllState/'
+ensemble_dir = '../Dropbox/Kaggle_AllState/ensemble'
 shift = 200
 NFOLDS = 10
 SEED = 10
@@ -60,6 +60,7 @@ def get_oof(clf):
     oof_test_skf = np.empty((NFOLDS, n_test))
 
     for i, (train_index, test_index) in enumerate(kf):
+        print(str(i))
         x_tr = x_train[train_index]
         y_tr = train_y[train_index]
         x_te = x_train[test_index]
@@ -90,7 +91,9 @@ rf_params = {
 
 
 #xg = XgbWrapper(seed=SEED, params=xgb_params)
+print('ExtraTreesRegressor')
 et = SklearnWrapper(clf=ExtraTreesRegressor, seed=SEED, params=et_params)
+print('RandomForestRegressor')
 rf = SklearnWrapper(clf=RandomForestRegressor, seed=SEED, params=rf_params)
 
 #xg_oof_train, xg_oof_test = get_oof(xg)
