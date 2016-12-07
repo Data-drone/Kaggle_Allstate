@@ -70,14 +70,14 @@ if __name__ == "__main__":
 
     print('\nStarted')
     #directory = '../input/'
-    directory = '../Dropbox/Kaggle_AllState/'
-    ensemble_dir = '../Dropbox/Kaggle_AllState/ensemble'
-    feats_dir = '../Dropbox/Kaggle_AllState/'
+    #directory = '../Dropbox/Kaggle_AllState/'
+    #ensemble_dir = '../Dropbox/Kaggle_AllState/ensemble'
+    #feats_dir = '../Dropbox/Kaggle_AllState/'
  
     # local
-    #directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
-    #ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
-    #feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
+    directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
+    ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
+    feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
  
     
     #### Load
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     train_x = train.drop(['loss','id'], axis=1)
     test_x = test.drop(['loss','id'], axis=1)
 
-    n_folds = 10
+    n_folds = 2
     cv_sum = 0
     early_stopping = 100
     fpred = []
@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
         clf = xgb.train(params,
                         d_train,
-                        10,
+                        10, #10000
                         watchlist,
                         early_stopping_rounds=50,
                         obj=fair_obj,
@@ -143,10 +143,11 @@ if __name__ == "__main__":
         
         scores_val = clf.predict(d_valid, ntree_limit=clf.best_ntree_limit) # save to oof_train
         oof_train[test_index] = scores_val
-        oof_test_skf[i, :] = clf.predict(d_test, ntree_limit=clf.best_ntree_limit)
+        #oof_test_skf[i, :] = clf.predict(d_test, ntree_limit=clf.best_ntree_limit)
         cv_score = mean_absolute_error(np.exp(y_val), np.exp(scores_val))
         print('eval-MAE: %.6f' % cv_score)
         y_pred = np.exp(clf.predict(d_test, ntree_limit=clf.best_ntree_limit)) - shift
+        oof_test_skf[i, :] = y_pred
 
         if i > 0:
             fpred = pred + y_pred
