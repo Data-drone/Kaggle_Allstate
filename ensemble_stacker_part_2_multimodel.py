@@ -97,7 +97,7 @@ if __name__ == "__main__":
     train_x = train.drop(['loss','id'], axis=1)
     test_x = test.drop(['loss','id'], axis=1)
 
-    n_folds = 2
+    n_folds = 10
     cv_sum = 0
     early_stopping = 100
     fpred = []
@@ -135,7 +135,7 @@ if __name__ == "__main__":
 
         clf = xgb.train(params,
                         d_train,
-                        10, #10000
+                        100000, #10000
                         watchlist,
                         early_stopping_rounds=50,
                         obj=fair_obj,
@@ -165,8 +165,8 @@ if __name__ == "__main__":
     print('Average eval-MAE: %.6f' % score)
     n_rounds = int(np.mean(xgb_rounds))
 
-    pickle.dump(oof_test_skf, open(ensemble_dir + "xgb_oof_train.pkl", "wb"))
-    pickle.dump(oof_train, open(ensemble_dir + "xgb_oof_test.pkl", "wb"))
+    #pickle.dump(oof_test_skf, open(ensemble_dir + "xgb_oof_train.pkl", "wb"))
+    #pickle.dump(oof_train, open(ensemble_dir + "xgb_oof_test.pkl", "wb"))
 
     print(oof_test_skf.shape)
     
