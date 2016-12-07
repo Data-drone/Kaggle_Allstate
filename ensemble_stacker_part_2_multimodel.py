@@ -75,9 +75,11 @@ if __name__ == "__main__":
     feats_dir = '../Dropbox/Kaggle_AllState/'
  
     # local
-    #directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
-    #ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
-    #feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
+    import platform
+    if (platform.system() == 'Windows'):
+        directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
+        ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
+        feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
  
     
     #### Load
