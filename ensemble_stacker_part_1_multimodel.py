@@ -91,13 +91,14 @@ rf_params = {
 
 
 #xg = XgbWrapper(seed=SEED, params=xgb_params)
-print('ExtraTreesRegressor')
+
 et = SklearnWrapper(clf=ExtraTreesRegressor, seed=SEED, params=et_params)
-print('RandomForestRegressor')
 rf = SklearnWrapper(clf=RandomForestRegressor, seed=SEED, params=rf_params)
 
 #xg_oof_train, xg_oof_test = get_oof(xg)
+print('ExtraTreesRegressor')
 et_oof_train, et_oof_test = get_oof(et)
+print('RandomForestRegressor')
 rf_oof_train, rf_oof_test = get_oof(rf)
 
 print("ET-CV: {}".format(mean_absolute_error(train_y, et_oof_train)))
