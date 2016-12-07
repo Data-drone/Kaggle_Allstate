@@ -75,9 +75,9 @@ if __name__ == "__main__":
     feats_dir = '../Dropbox/Kaggle_AllState/'
  
     # local
-    directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
-    ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
-    feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
+    #directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
+    #ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
+    #feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
  
     
     #### Load
