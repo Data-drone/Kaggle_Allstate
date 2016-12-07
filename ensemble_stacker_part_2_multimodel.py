@@ -70,14 +70,14 @@ if __name__ == "__main__":
 
     print('\nStarted')
     #directory = '../input/'
-    #directory = '../Dropbox/Kaggle_AllState/'
-    #ensemble_dir = '../Dropbox/Kaggle_AllState/ensemble'
-    #feats_dir = '../Dropbox/Kaggle_AllState/'
+    directory = '../Dropbox/Kaggle_AllState/'
+    ensemble_dir = '../Dropbox/Kaggle_AllState/ensemble'
+    feats_dir = '../Dropbox/Kaggle_AllState/'
  
     # local
-    directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
-    ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
-    feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
+    #directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
+    #ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
+    #feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
  
     
     #### Load
