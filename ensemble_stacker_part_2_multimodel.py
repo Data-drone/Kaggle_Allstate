@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
         clf = xgb.train(params,
                         d_train,
-                        100000,
+                        10,
                         watchlist,
                         early_stopping_rounds=50,
                         obj=fair_obj,
@@ -142,7 +142,7 @@ if __name__ == "__main__":
         xgb_rounds.append(clf.best_iteration)
         
         scores_val = clf.predict(d_valid, ntree_limit=clf.best_ntree_limit) # save to oof_train
-        oof_train[test_index] =scores_val
+        oof_train[test_index] = scores_val
         oof_test_skf[i, :] = clf.predict(d_test, ntree_limit=clf.best_ntree_limit)
         cv_score = mean_absolute_error(np.exp(y_val), np.exp(scores_val))
         print('eval-MAE: %.6f' % cv_score)
@@ -155,8 +155,6 @@ if __name__ == "__main__":
         pred = fpred
         cv_sum = cv_sum + cv_score
 
-    oof_test[:] = oof_test_skf.mean(axis=0).reshape(-1, 1)
-    oof_train.reshape(-1, 1)
     
     
     mpred = pred / n_folds
@@ -164,8 +162,15 @@ if __name__ == "__main__":
     print('Average eval-MAE: %.6f' % score)
     n_rounds = int(np.mean(xgb_rounds))
 
-    pickle.dump(oof_train, open(ensemble_dir + "xgb_oof_train.pkl", "wb"))
-    pickle.dump(oof_test, open(ensemble_dir + "xgb_oof_test.pkl", "wb"))
+    pickle.dump(oof_test_skf, open(ensemble_dir + "xgb_oof_train.pkl", "wb"))
+    pickle.dump(oof_train, open(ensemble_dir + "xgb_oof_test.pkl", "wb"))
+
+    oof_test[:] = oof_test_skf.mean(axis=0).reshape(-1, 1)
+    oof_train.reshape(-1, 1)
+    
+    pickle.dump(oof_test, open(ensemble_dir + "xgb_oof_train_2.pkl", "wb"))
+    pickle.dump(oof_train, open(ensemble_dir + "xgb_oof_test_2.pkl", "wb"))    
+
     
     """
     print("Writing results")
