@@ -168,7 +168,9 @@ if __name__ == "__main__":
     pickle.dump(oof_test_skf, open(ensemble_dir + "xgb_oof_train.pkl", "wb"))
     pickle.dump(oof_train, open(ensemble_dir + "xgb_oof_test.pkl", "wb"))
 
-    oof_test[:] = oof_test_skf.mean(axis=0).reshape(-1, 1)
+    print(oof_test_skf.shape)
+    
+    oof_test = oof_test_skf.mean(axis=0).reshape(-1, 1)
     oof_train.reshape(-1, 1)
     
     pickle.dump(oof_test, open(ensemble_dir + "xgb_oof_train_2.pkl", "wb"))
