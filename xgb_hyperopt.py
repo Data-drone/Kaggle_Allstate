@@ -146,5 +146,6 @@ if __name__ == "__main__":
                 trials=trials)
     
     print(best)
-    
-    
+    pickle.dumps(trials, open(directory + "hyperopt_trials.pkl", "wb") )
+    #trials.to_pickle(directory + 'hyperopt_trials.pkl')
+    #pickle.dumps
