@@ -70,7 +70,7 @@ if __name__ == "__main__":
         fpred = []
         xgb_rounds = []
         
-        kf = KFold(train.shape[0], n_folds=n_folds)
+        kf = KFold(n_train, n_folds=n_folds)
         for i, (train_index, test_index) in enumerate(kf):
             print('\n Fold %d' % (i+1))
             X_train, X_val = train_x.iloc[train_index], train_x.iloc[test_index]

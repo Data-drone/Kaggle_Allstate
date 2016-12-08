@@ -106,6 +106,8 @@ if __name__ == "__main__":
     d_train_full = xgb.DMatrix(train_x, label=train_y)
     d_test = xgb.DMatrix(test_x)
 
+    
+    
     kf = KFold(train.shape[0], n_folds=n_folds)
     for i, (train_index, test_index) in enumerate(kf):
         oof_train = np.zeros((n_train,))

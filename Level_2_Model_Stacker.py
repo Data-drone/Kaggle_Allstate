@@ -22,7 +22,7 @@ shift = 200
 import platform
 if (platform.system() == 'Windows'):
     directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
-    ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
+    ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble/'
     feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
     DATA_DIR = directory
 
@@ -32,17 +32,17 @@ SEED = 0
 y_train = np.array(pd.read_csv(directory + 'train.csv').loss.ravel(), dtype=np.float64)
 SUBMISSION_FILE =     "{0}/sample_submission.csv".format(DATA_DIR)
     #### Load
-et_oof_test = pickle.load(open(directory + 'ensemblerf_oof_test.pkl', 'rb') )
-et_oof_train = pickle.load(open(directory + 'ensemblerf_oof_train.pkl', 'rb') )
+et_oof_test = pickle.load(open(ensemble_dir + 'ensemblerf_oof_test.pkl', 'rb') )
+et_oof_train = pickle.load(open(ensemble_dir + 'ensemblerf_oof_train.pkl', 'rb') )
 
-xgb_oof_test = pickle.load(open(directory + 'ensemblexgb_oof_test_2.pkl', 'rb') )
+xgb_oof_test = pickle.load(open(ensemble_dir + 'ensemblexgb_oof_test_2.pkl', 'rb') )
 xgb_oof_test = np.log(xgb_oof_test + shift)
-xgb_oof_train = pickle.load(open(directory + 'ensemblexgb_oof_train_2.pkl', 'rb') )
+xgb_oof_train = pickle.load(open(ensemble_dir + 'ensemblexgb_oof_train_2.pkl', 'rb') )
 # might just be fix for this file
 xgb_oof_train = xgb_oof_train.reshape(-1,1)
 
-rf_oof_test = pickle.load(open(directory + 'ensemblerf_oof_test.pkl', 'rb') )
-rf_oof_train = pickle.load(open(directory + 'ensemblerf_oof_train.pkl', 'rb') )
+rf_oof_test = pickle.load(open(ensemble_dir + 'ensemblerf_oof_test.pkl', 'rb') )
+rf_oof_train = pickle.load(open(ensemble_dir + 'ensemblerf_oof_train.pkl', 'rb') )
 
 # xgb set is off
 print("XG-CV: {}".format(mean_absolute_error(y_train, np.exp(xgb_oof_train) - shift ) ) )
