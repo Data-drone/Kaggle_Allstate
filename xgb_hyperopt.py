@@ -66,8 +66,8 @@ if __name__ == "__main__":
 
         n_folds = 10
         cv_sum = 0
-        early_stopping = 100
-        fpred = []
+        #early_stopping = 100
+        #fpred = []
         xgb_rounds = []
         
         kf = KFold(n_train, n_folds=n_folds)
@@ -75,27 +75,12 @@ if __name__ == "__main__":
             print('\n Fold %d' % (i+1))
             X_train, X_val = train_x.iloc[train_index], train_x.iloc[test_index]
             y_train, y_val = train_y.iloc[train_index], train_y.iloc[test_index]
-    
-            rand_state = 2016
-    
-            params = {
-                'seed': rand_state,
-                'colsample_bytree': space['colsample_bytree'],
-                'silent': 1,
-                'subsample': space['subsample'], #0.7,
-                'learning_rate': space['learning_rate'], #0.03,
-                'objective': 'reg:linear',
-                'max_depth': space['max_depth'],
-                'min_child_weight': space['min_child_weight'], #100,
-                'booster': 'gbtree'}
-            
-        
         
             d_train = xgb.DMatrix(X_train, label=y_train)
             d_valid = xgb.DMatrix(X_val, label=y_val)
             watchlist = [(d_train, 'train'), (d_valid, 'eval')]
 
-            clf = xgb.train(params,
+            clf = xgb.train(space,
                         d_train,
                         100000,
                         watchlist,
@@ -115,14 +100,18 @@ if __name__ == "__main__":
 
     
     
-    space ={
+    space = {
+        'seed': 0,
         'max_depth': hp.choice('max_depth', np.arange(10, 30, 5, dtype=int)),
         'min_child_weight': hp.choice('min_child', np.arange(20, 150, 15, dtype=int)), #20, 150, 20),
         'subsample': hp.uniform ('subsample', 0.6, 0.9),
+        'silent': 1,
         #'n_estimators' : hp.choice('n_estimators', np.arange(1000, 10000, 100, dtype=int)),
         'learning_rate' : hp.quniform('learning_rate', 0.02, 0.5, 0.025),
+        'objective': 'reg:linear',
         #'gamma' : hp.quniform('gamma', 0.5, 1, 0.05),
-        'colsample_bytree' : hp.quniform('colsample_bytree', 0.5, 1, 0.05)
+        'colsample_bytree' : hp.quniform('colsample_bytree', 0.5, 1, 0.05),
+        'booster': 'gbtree'
     }
 
     
