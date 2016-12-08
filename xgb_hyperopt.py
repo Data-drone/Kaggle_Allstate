@@ -13,7 +13,7 @@ import xgboost as xgb
 from sklearn.metrics import mean_absolute_error
 from hyperopt import hp, tpe, STATUS_OK, Trials
 from sklearn.cross_validation import KFold
-from hyperopt.fmin import fmin
+from hyperopt import fmin
 
 fair_constant = 0.7
 def fair_obj(preds, dtrain):
@@ -106,26 +106,13 @@ if __name__ == "__main__":
             xgb_rounds.append(clf.best_iteration)
         
             scores_val = clf.predict(d_valid, ntree_limit=clf.best_ntree_limit)
-        # need to take back out the shift
             cv_score = mean_absolute_error(np.exp(y_val), np.exp(scores_val))
             print('eval-MAE: %.6f' % cv_score)
-            #y_pred = np.exp(clf.predict(d_test, ntree_limit=clf.best_ntree_limit)) - shift
-
-            #if i > 0:
-            #    fpred = pred + y_pred
-            #else:
-            #    fpred = y_pred
-            #pred = fpred
             cv_sum = cv_sum + cv_score
         
-        #mpred = pred / n_folds
         score = cv_sum / n_folds    
-            
-            
-    #    print "SCORE:", mae
-        return{'loss':score, 'status': STATUS_OK }
+        return { 'loss': score, 'status': STATUS_OK }
 
-    
     
     
     space ={
