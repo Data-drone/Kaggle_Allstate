@@ -11,9 +11,8 @@ import pandas as pd
 import numpy as np
 import xgboost as xgb
 from sklearn.metrics import mean_absolute_error
-from hyperopt import hp, tpe, STATUS_OK, Trials
+from hyperopt import fmin, hp, tpe, STATUS_OK, Trials
 from sklearn.cross_validation import KFold
-from hyperopt import fmin
 
 fair_constant = 0.7
 def fair_obj(preds, dtrain):
@@ -102,15 +101,13 @@ if __name__ == "__main__":
     
     space = {
         'seed': 0,
-        'max_depth': hp.choice('max_depth', np.arange(10, 30, 5, dtype=int)),
-        'min_child_weight': hp.choice('min_child', np.arange(20, 150, 15, dtype=int)), #20, 150, 20),
-        'subsample': hp.uniform ('subsample', 0.6, 0.9),
+        'colsample_bytree' : hp.quniform('colsample_bytree', 0.5, 1, 0.05),
         'silent': 1,
-        #'n_estimators' : hp.choice('n_estimators', np.arange(1000, 10000, 100, dtype=int)),
+        'subsample': hp.uniform ('subsample', 0.6, 0.9),        
         'learning_rate' : hp.quniform('learning_rate', 0.02, 0.5, 0.025),
         'objective': 'reg:linear',
-        #'gamma' : hp.quniform('gamma', 0.5, 1, 0.05),
-        'colsample_bytree' : hp.quniform('colsample_bytree', 0.5, 1, 0.05),
+        'max_depth': hp.choice('max_depth', np.arange(10, 30, 5, dtype=int)),
+        'min_child_weight': hp.choice('min_child', np.arange(20, 150, 15, dtype=int)), #20, 150, 20),
         'booster': 'gbtree'
     }
 
