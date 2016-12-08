@@ -71,14 +71,14 @@ if __name__ == "__main__":
     print('\nStarted')
     #directory = '../input/'
     directory = '../Dropbox/Kaggle_AllState/'
-    ensemble_dir = '../Dropbox/Kaggle_AllState/ensemble'
+    ensemble_dir = '../Dropbox/Kaggle_AllState/ensemble/'
     feats_dir = '../Dropbox/Kaggle_AllState/'
  
     # local
     import platform
     if (platform.system() == 'Windows'):
         directory = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
-        ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble'
+        ensemble_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/ensemble/'
         feats_dir = 'E:/Dropbox/Dropbox/Kaggle_AllState/'
  
     
@@ -149,7 +149,7 @@ if __name__ == "__main__":
         cv_score = mean_absolute_error(np.exp(y_val), np.exp(scores_val))
         print('eval-MAE: %.6f' % cv_score)
         y_pred = np.exp(clf.predict(d_test, ntree_limit=clf.best_ntree_limit)) - shift
-        oof_test_skf[i, :] = y_pred
+        oof_test_skf[i, :] = clf.predict(d_test, ntree_limit=clf.best_ntree_limit)
 
         if i > 0:
             fpred = pred + y_pred
@@ -173,8 +173,11 @@ if __name__ == "__main__":
     oof_test = oof_test_skf.mean(axis=0).reshape(-1, 1)
     oof_train.reshape(-1, 1)
     
-    pickle.dump(oof_test, open(ensemble_dir + "xgb_oof_train_2.pkl", "wb"))
-    pickle.dump(oof_train, open(ensemble_dir + "xgb_oof_test_2.pkl", "wb"))    
+    now = datetime.now()
+    pickle.dump(oof_train, open(ensemble_dir + "xgb_oof_train" + '_' + str(
+        now.strftime("%Y-%m-%d-%H-%M")) + ".pkl", "wb"))
+    pickle.dump(oof_test, open(ensemble_dir + "xgb_oof_test" + '_' + str(
+        now.strftime("%Y-%m-%d-%H-%M")) + ".pkl", "wb"))    
 
     
     """

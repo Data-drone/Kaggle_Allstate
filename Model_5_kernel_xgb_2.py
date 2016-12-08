@@ -43,6 +43,7 @@ def xg_eval_mae(yhat, dtrain):
     y = dtrain.get_label()
     return 'mae', mean_absolute_error(np.exp(y)-shift,
                                       np.exp(yhat)-shift)
+    
 def mungeskewed(train, test, numeric_feats):
     ntrain = train.shape[0]
     test['loss'] = 0
@@ -177,7 +178,9 @@ if __name__ == "__main__":
                         feval=xg_eval_mae)
 
         xgb_rounds.append(clf.best_iteration)
+        
         scores_val = clf.predict(d_valid, ntree_limit=clf.best_ntree_limit)
+        # need to take back out the shift
         cv_score = mean_absolute_error(np.exp(y_val), np.exp(scores_val))
         print('eval-MAE: %.6f' % cv_score)
         y_pred = np.exp(clf.predict(d_test, ntree_limit=clf.best_ntree_limit)) - shift
