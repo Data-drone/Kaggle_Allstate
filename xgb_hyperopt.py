@@ -13,6 +13,7 @@ import xgboost as xgb
 from sklearn.metrics import mean_absolute_error
 from hyperopt import hp, tpe, STATUS_OK, Trials
 from sklearn.cross_validation import KFold
+from hyperopt.fmin import fmin
 
 fair_constant = 0.7
 def fair_obj(preds, dtrain):
