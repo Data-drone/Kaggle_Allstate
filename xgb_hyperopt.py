@@ -12,7 +12,7 @@ import numpy as np
 import xgboost as xgb
 from sklearn.metrics import mean_absolute_error
 from hyperopt import hp, tpe, STATUS_OK, Trials
-from sklearn import KFold
+from sklearn.cross_validation import KFold
 
 fair_constant = 0.7
 def fair_obj(preds, dtrain):
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     best = fmin(fn=objective,
                 space=space,
                 algo=tpe.suggest,
-                max_evals=3, # change
+                max_evals=1000, # change
                 trials=trials)
     
     print(best)
