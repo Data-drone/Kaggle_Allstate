@@ -1,1 +1,3 @@
-# Modelling and data analysis code for the Kaggle Allstate competition
+# Kaggle Allstate Competition
+
+* Some basic data exploration and machine learning routines
