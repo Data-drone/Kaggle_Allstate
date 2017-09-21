@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Nov 27 20:59:32 2016
+Python EDA for the kaggle allstate competition to look at correlations and uniques
 
 @author: Brian
 """
