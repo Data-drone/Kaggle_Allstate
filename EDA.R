@@ -1,17 +1,15 @@
-
+# Load Libraries
 require(dplyr)
 require(readr)
 require(ggplot2)
 require(caret)
 
+# Location of the dataset
 data_path = '../Dropbox/Kaggle_AllState/'
 
 train_frame <- read_csv(paste0(data_path, 'train.csv'))
 
-
-train_frame %>%
-  select()
-
+# Nasic Exploration of the data set and some plotting
 nzr <- nearZeroVar(train_frame, saveMetrics= TRUE)
 
 filtered_train <- train_frame[, -nzr$nzv]
